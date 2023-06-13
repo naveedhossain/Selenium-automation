@@ -1,0 +1,152 @@
+from selenium.webdriver.chrome.service import Service
+from selenium import webdriver
+import time
+from selenium.webdriver.support.ui import Select
+
+s = Service("D:\\Software\\C driver\\chromedriver.exe") #you have to change
+driver = webdriver.Chrome(service=s) #you have to change
+time.sleep(2)
+driver.maximize_window()
+# going to webiste address
+driver.get("https://automationexercise.com/")
+time.sleep(2)
+# Verifying home page
+test = driver.find_element("xpath",'//*[@id="slider-carousel"]/div/div[1]/div[1]/h1/span').text
+print(test)
+if test == "Automation":
+   print("Verified Home page")
+else:
+    print("It's not home page")
+
+driver.execute_script("window.scrollBy(0,500)","") #for scrolling
+# add to cart
+time.sleep(2)
+view = driver.find_element("xpath",'/html/body/section[2]/div/div/div[2]/div[1]/div[2]/div/div[2]/ul/li/a').click()
+time.sleep(2)
+add_to_cart = driver.find_element("xpath",'/html/body/section/div/div/div[2]/div[2]/div[2]/div/span/button').click()
+time.sleep(2)
+#cart page view
+view = driver.find_element("xpath",'//*[@id="cartModal"]/div/div/div[2]/p[2]/a').click()
+time.sleep(2)
+# verify cart page
+test_cart = driver.find_element("xpath",'//*[@id="cart_items"]/div/div[1]/ol/li[2]').text
+print(test_cart)
+if test_cart == "Shopping Cart":
+   print("Verified cart page")
+else:
+    print('Wrong path')
+#proceed to check out
+pc = driver.find_element("xpath",'//*[@id="do_action"]/div[1]/div/div/a').click()
+#login page
+lp = driver.find_element("xpath",'//*[@id="checkoutModal"]/div/div/div[2]/p[2]/a').click()
+#form fillup
+driver.find_element("xpath",'//*[@id="form"]/div/div/div[3]/div/form/input[2]').send_keys("Naveed Hossaim")
+driver.find_element("xpath",'//*[@id="form"]/div/div/div[3]/div/form/input[3]').send_keys("naveedhossain@gmail.com")
+button_click = driver.find_element("xpath",'//*[@id="form"]/div/div/div[3]/div/form/button').click()
+#sign up done
+#main form
+rb = driver.find_element("xpath",'//*[@id="id_gender1"]').click()
+driver.find_element("xpath",'//*[@id="password"]').send_keys("naveed123")
+day = Select(driver.find_element("xpath",'//*[@id="days"]'))
+day.select_by_index(23)
+time.sleep(1)
+month = Select(driver.find_element("xpath",'//*[@id="months"]'))
+month.select_by_index(7)
+time.sleep(1)
+month = Select(driver.find_element("xpath",'//*[@id="years"]'))
+month.select_by_index(24)
+time.sleep(1)
+s1 = driver.find_element("xpath",'//*[@id="newsletter"]').click()
+s2 = driver.find_element("xpath",'//*[@id="optin"]').click()
+driver.execute_script("window.scrollBy(0,500)","")
+driver.find_element("xpath",'//*[@id="first_name"]').send_keys("Syed Bayes ")
+driver.find_element("xpath",'//*[@id="last_name"]').send_keys("Iqbal")
+driver.find_element("xpath",'//*[@id="company"]').send_keys("ABC company")
+driver.find_element("xpath",'//*[@id="address1"]').send_keys("66 Mohakhali")
+driver.find_element("xpath",'//*[@id="address2"]').send_keys("67 Mohakhali")
+country = Select(driver.find_element("xpath",'//*[@id="country"]'))
+day.select_by_index(1)
+time.sleep(1)
+driver.find_element("xpath",'//*[@id="state"]').send_keys("Dhaka")
+driver.find_element("xpath",'//*[@id="city"]').send_keys("Mohakhali")
+driver.find_element("xpath",'//*[@id="zipcode"]').send_keys("1209")
+driver.find_element("xpath",'//*[@id="mobile_number"]').send_keys("01744820559")
+driver.find_element("xpath",'//*[@id="form"]/div/div/div/div[1]/form/button').click()
+#verify account created
+test1 = driver.find_element("xpath",'//*[@id="form"]/div/div/div/h2/b').text
+print(test1)
+if test1 == "ACCOUNT CREATED!":
+   print("ACCOUNT CREATED Succeessfully")
+else:
+    print("ACCOUNT NOT CREATED!")
+driver.find_element("xpath",'//*[@id="form"]/div/div/div/div/a').click()
+time.sleep(2)
+# Verify user account
+test2 = driver.find_element("xpath",'//*[@id="header"]/div/div/div/div[2]/div/ul/li[10]/a/b').text
+print(test2)
+if test2 == "Syed Bayes Iqbal":
+   print("Successful user login")
+else:
+    print("Unsuccessful user login")
+#go to cart page
+driver.find_element("xpath",'//*[@id="header"]/div/div/div/div[2]/div/ul/li[3]/a').click()
+#procced to checkout again
+driver.find_element("xpath",'//*[@id="do_action"]/div[1]/div/div/a').click()
+#verify successful message
+test_1 = driver.find_element("xpath",'//*[@id="address_delivery"]/li[2]').text
+print(test_1)
+if test_1 == "Mr. Syed Bayes Iqbal":
+   print("Name successful")
+else:
+    print("Name not successful")
+test_2 = driver.find_element("xpath",'//*[@id="address_delivery"]/li[3]').text
+print(test_2)
+if test_2 == "ABC company":
+   print("Company name successful")
+else:
+    print("Company name not successful")
+test_3 = driver.find_element("xpath",'//*[@id="address_delivery"]/li[4]').text
+print(test_3)
+if test_3 == "66 Mohakhali":
+   print("Address name successful")
+else:
+    print("Address name not successful")
+test_4 = driver.find_element("xpath",'//*[@id="address_delivery"]/li[8]').text
+print(test_4)
+if test_4 == "01744820559":
+   print("Phone number successful")
+else:
+    print("Phone number not successful")
+test_5 = driver.find_element("xpath",'//*[@id="product-1"]/td[2]/h4/a').text
+print(test_5)
+if test_5 == "Blue Top":
+   print("Order verified successful")
+else:
+    print("Order verified not successful")
+"Place order"
+driver.execute_script("window.scrollBy(0,500)","")
+driver.find_element("xpath",'//*[@id="ordermsg"]/textarea').send_keys("Place Order")
+driver.find_element("xpath",'//*[@id="cart_items"]/div/div[7]/a').click()
+"Card part"
+driver.find_element("xpath",'//*[@id="payment-form"]/div[1]/div/input').send_keys("Syed Bayes Iqbal")
+driver.find_element("xpath",'//*[@id="payment-form"]/div[2]/div/input').send_keys("1234567891011")
+driver.find_element("xpath",'//*[@id="payment-form"]/div[3]/div[1]/input').send_keys("321")
+driver.find_element("xpath",'//*[@id="payment-form"]/div[3]/div[2]/input').send_keys("12")
+driver.find_element("xpath",'//*[@id="payment-form"]/div[3]/div[3]/input').send_keys("2025")
+#Pay and Confirm Order
+driver.find_element("xpath",'//*[@id="submit"]').click()
+time.sleep(2)
+#verify successful message
+# test4 = driver.find_element("xpath",'//*[@id="success_message"]/div').text
+# print(test4)
+# if test4 == "Your order has been placed successfully!":
+#    print("Order Confirmed")
+# else:
+#     print("Order Not Confirmed")
+test4 = driver.find_element("xpath",'//*[@id="form"]/div/div/div/p').text
+print(test4)
+if test4 == "Congratulations! Your order has been confirmed!":
+   print("Order Confirmed")
+else:
+    print("Order Not Confirmed")
+print("Successful")
